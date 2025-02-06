@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Journey of Love</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Additional styles for the memory game & confetti */
+    .card {
+      background-color: #f9f9f9;
+      border: 2px solid #ccc;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      user-select: none;
+      height: 100px;
+    }
+    .card.flipped {
+      background-color: #fff;
+      border-color: #e91e63;
+    }
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="bg-pink-50">
+
+  <!-- Introduction Section -->
+  <section id="section-intro" class="min-h-screen flex flex-col justify-center items-center">
+    <h1 class="text-4xl font-serif text-red-600 mb-4">Welcome, Cayla</h1>
+    <p class="text-center max-w-md mb-6">
+      In gentle whispers, love calls to your heart,<br>
+      Embarking on a journey where dreams never part.<br>
+      Follow the clues, embrace the art,<br>
+      And let the magic of love be your start.
+    </p>
+    <button id="start-button" class="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600">
+      Begin the Journey
+    </button>
+  </section>
+
+  <!-- Riddle Challenge Section -->
+  <section id="section-riddle" class="min-h-screen flex flex-col justify-center items-center hidden">
+    <h2 class="text-3xl font-serif text-pink-700 mb-4">Riddle of the Heart</h2>
+    <p class="mb-4 text-center max-w-md">
+      I am the beat in your chest and the spark in your eye.<br>
+      Without me, the world would simply pass by.<br>
+      Tell me, what am I?
+    </p>
+    <input type="text" id="riddle-answer" placeholder="Your answer here" class="border border-pink-300 p-2 rounded mb-4">
+    <button id="riddle-submit" class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600">Submit Answer</button>
+    <p id="riddle-error" class="text-red-500 mt-2 hidden">That's not quite right. Try again!</p>
+  </section>
+
+  <!-- Memory Match Game Section -->
+  <section id="section-memory" class="min-h-screen flex flex-col justify-center items-center hidden">
+    <h2 class="text-3xl font-serif text-red-500 mb-4">Memories of Us</h2>
+    <p class="mb-4 text-center max-w-md">Match the symbols that remind us of our cherished moments.</p>
+    <div id="memory-grid" class="grid grid-cols-4 gap-4 max-w-md mb-6"></div>
+    <button id="memory-continue" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 hidden">Continue</button>
+  </section>
+
+  <!-- Interactive Story Section -->
+  <section id="section-story" class="min-h-screen flex flex-col justify-center items-center hidden px-4">
+    <h2 class="text-3xl font-serif text-pink-600 mb-4">A Path of Memories</h2>
+    <div id="story-content" class="text-center max-w-md mb-6">
+      <p>Walking down the lane of our memories, every turn holds a cherished moment.</p>
+    </div>
+    <div id="story-choices" class="flex space-x-4">
+      <button class="story-choice bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600" data-choice="first">Recall Our First Meeting</button>
+      <button class="story-choice bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600" data-choice="adventure">Remember Our Adventures</button>
+    </div>
+    <button id="story-continue" class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 mt-4 hidden">Continue</button>
+  </section>
+
+  <!-- Final Revelation Section -->
+  <section id="section-final" class="min-h-screen flex flex-col justify-center items-center hidden">
+    <h2 class="text-3xl font-serif text-red-600 mb-4">The Final Question</h2>
+    <p class="text-center max-w-md mb-6">Cayla Hybre, will you be my valentine?</p>
+    <button id="final-yes" class="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600">Yes</button>
+    <div id="celebration" class="relative w-full h-0"></div>
+  </section>
+
+  <!-- GSAP Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+  <!-- Main JavaScript -->
+  <script src="js/scripts.js"></script>
+</body>
+</html> 
