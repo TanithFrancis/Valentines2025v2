@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
     displayCurrentRiddle();
   });
 
-  // --- Multi-Riddle Challenge ---
+  // --- Multi-Riddle Challenge using a Card ---
   const riddles = [
     {
       question:
@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
     riddleQuestionEl.textContent = riddles[currentRiddleIndex].question;
     document.getElementById("riddle-answer").value = "";
     document.getElementById("riddle-error").classList.add("hidden");
+    gsap.set("#riddle-card", { x: "0%", opacity: 1 });
   }
 
   document.getElementById("riddle-submit").addEventListener("click", function() {
@@ -76,15 +77,25 @@ document.addEventListener("DOMContentLoaded", function() {
     const userAnswer = answerInput.value.trim().toLowerCase();
     const errorMsg = document.getElementById("riddle-error");
     if (userAnswer === riddles[currentRiddleIndex].answer) {
-      // Correct: Move to next riddle or next section if done
-      currentRiddleIndex++;
-      if (currentRiddleIndex < riddles.length) {
-        displayCurrentRiddle();
-      } else {
-        // After all riddles, proceed to Memory Match Game
-        transitionToSection("section-riddle", "section-memory");
-        initializeMemoryGame();
-      }
+      // Animate card sliding out to the left
+      gsap.to("#riddle-card", {
+        x: "-100%",
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.in",
+        onComplete: function () {
+          currentRiddleIndex++;
+          if (currentRiddleIndex < riddles.length) {
+            displayCurrentRiddle();
+            // Animate card sliding in from the right
+            gsap.fromTo("#riddle-card", { x: "100%", opacity: 0 }, { x: "0%", opacity: 1, duration: 0.5, ease: "power2.out" });
+          } else {
+            // All riddles answered; move to Memory Match Game
+            transitionToSection("section-riddle", "section-memory");
+            initializeMemoryGame();
+          }
+        },
+      });
     } else {
       errorMsg.classList.remove("hidden");
     }
@@ -187,9 +198,10 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("memory-continue").addEventListener("click", function() {
     transitionToSection("section-memory", "section-gallery");
     animateGallery();
+    startCarousel();
   });
 
-  // --- Gallery Animation ---
+  // --- Gallery Animation for Masonry Grid ---
   function animateGallery() {
     gsap.to("#gallery img", {
       opacity: 1,
@@ -200,12 +212,32 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
+  // --- Carousel Functionality ---
+  function startCarousel() {
+    const carouselInner = document.getElementById("carousel-inner");
+    const slides = carouselInner.children;
+    const numSlides = slides.length;
+    let currentIndex = 0;
+    function showNextSlide() {
+      currentIndex = (currentIndex + 1) % numSlides;
+      gsap.to(carouselInner, {
+        x: -currentIndex * 100 + "%",
+        duration: 1,
+        ease: "power2.inOut",
+        onComplete: function () {
+          setTimeout(showNextSlide, 3000);
+        },
+      });
+    }
+    setTimeout(showNextSlide, 3000);
+  }
+
   document.getElementById("gallery-continue").addEventListener("click", function() {
     transitionToSection("section-gallery", "section-final");
     animateFinalQuestion();
   });
 
-  // --- Final Dramatic Revelation ---
+  // --- Final Dramatic Revelation Animation ---
   function animateFinalQuestion() {
     gsap.fromTo(
       "#final-question",
