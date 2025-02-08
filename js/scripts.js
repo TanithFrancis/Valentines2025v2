@@ -1,3 +1,6 @@
+// Test log to confirm the script is loaded
+console.log("scripts.js loaded successfully!");
+
 // -------------------------
 // Section Transition Helpers
 // -------------------------
@@ -10,6 +13,7 @@ function transitionToSection(fromId, toId) {
 // Introduction → Riddle Section
 // -------------------------
 document.getElementById("start-button").addEventListener("click", function() {
+  console.log("'Begin the Journey' button clicked");
   transitionToSection("section-intro", "section-riddle");
 });
 
@@ -144,7 +148,8 @@ storyChoices.forEach(button => {
 });
 
 storyContinueButton.addEventListener("click", function() {
-  transitionToSection("section-story", "section-final");
+  transitionToSection("section-story", "section-gallery");
+  animateGallery();
 });
 
 // -------------------------
@@ -184,4 +189,26 @@ function launchCelebration() {
 function getRandomColor() {
   const colors = ["#FF5733", "#FFC300", "#DAF7A6", "#FF33F6", "#C70039", "#900C3F", "#581845"];
   return colors[Math.floor(Math.random() * colors.length)];
-} 
+}
+
+// Function to animate the gallery images using GSAP
+function animateGallery() {
+  gsap.to("#gallery img", {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    stagger: 0.1,
+    ease: "power2.out"
+  });
+}
+
+// Transition from the story section to the gallery section and animate the gallery
+document.getElementById("story-continue").addEventListener("click", function () {
+  transitionToSection("section-story", "section-gallery");
+  animateGallery();
+});
+
+// Transition from the gallery to the final section
+document.getElementById("gallery-continue").addEventListener("click", function () {
+  transitionToSection("section-gallery", "section-final");
+}); 
