@@ -70,6 +70,37 @@
       opacity: 0;
       transform: translateY(10px);
     }
+
+    /* Carousel Styles */
+    #carousel {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      overflow: hidden;
+      border-radius: 0.5rem;
+    }
+    #carousel-inner {
+      display: flex;
+      transition: transform 1s ease-in-out;
+    }
+    #carousel-inner img {
+      width: 100%;
+      flex-shrink: 0;
+      border-radius: 0.5rem;
+    }
+    
+    /* Riddle Card Styles */
+    #riddle-card {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+      transform: translateX(0);
+      transition: all 0.5s;
+    }
   </style>
 </head>
 <body class="bg-pink-50">
@@ -90,15 +121,17 @@
     </button>
   </section>
 
-  <!-- Multi-Riddle Challenge Section -->
+  <!-- Multi-Riddle Challenge Section using a Card -->
   <section id="section-riddle" class="min-h-screen flex flex-col justify-center items-center hidden">
-    <h2 id="riddle-title" class="text-3xl font-serif text-pink-700 mb-4">Riddle of the Heart</h2>
-    <p id="riddle-question" class="mb-4 text-center max-w-md"></p>
-    <input type="text" id="riddle-answer" placeholder="Your answer here" class="border border-pink-300 p-2 rounded mb-4">
-    <button id="riddle-submit" class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600">
-      Submit Answer
-    </button>
-    <p id="riddle-error" class="text-red-500 mt-2 hidden">That's not quite right. Try again!</p>
+    <div id="riddle-card">
+      <h2 id="riddle-title" class="text-3xl font-serif text-pink-700 mb-4">Riddle of the Heart</h2>
+      <p id="riddle-question" class="mb-4 text-center"></p>
+      <input type="text" id="riddle-answer" placeholder="Your answer here" class="border border-pink-300 p-2 rounded w-full mb-4" />
+      <button id="riddle-submit" class="bg-pink-500 text-white px-4 py-2 rounded w-full hover:bg-pink-600">
+        Submit Answer
+      </button>
+      <p id="riddle-error" class="text-red-500 mt-2 hidden">That's not quite right. Try again!</p>
+    </div>
   </section>
 
   <!-- Memory Match Game Section -->
@@ -111,20 +144,43 @@
     </button>
   </section>
 
-  <!-- Gallery Section with Staggered Grid -->
+  <!-- Gallery Section with Carousel and Masonry Grid -->
   <section id="section-gallery" class="min-h-screen flex flex-col justify-center items-center hidden">
     <h2 class="text-3xl font-serif text-pink-600 mb-4">Our Memory Lane</h2>
+    
+    <!-- Carousel -->
+    <div id="carousel">
+      <div id="carousel-inner">
+        <img src="images/image1.jpg" alt="Memory Image 1">
+        <img src="images/image2.jpg" alt="Memory Image 2">
+        <img src="images/image3.jpg" alt="Memory Image 3">
+        <img src="images/image4.jpg" alt="Memory Image 4">
+        <img src="images/image5.heif" alt="Memory Image 5">
+        <img src="images/image6.jpg" alt="Memory Image 6">
+        <img src="images/image7.jpg" alt="Memory Image 7">
+        <img src="images/image8.jpg" alt="Memory Image 8">
+        <img src="images/image9.heif" alt="Memory Image 9">
+        <img src="images/image10.jpg" alt="Memory Image 10">
+        <img src="images/image11.jpg" alt="Memory Image 11">
+        <img src="images/image12.jpg" alt="Memory Image 12">
+        <img src="images/image13.jpg" alt="Memory Image 13">
+        <img src="images/image14.jpg" alt="Memory Image 14">
+        <img src="images/image15.jpg" alt="Memory Image 15">
+        <img src="images/image16.jpg" alt="Memory Image 16">
+      </div>
+    </div>
+
+    <!-- Masonry Grid Gallery -->
     <div id="gallery" class="w-full p-4">
-      <!-- Update these image paths to match your repository -->
       <img src="images/image1.jpg" alt="Memory Image 1">
       <img src="images/image2.jpg" alt="Memory Image 2">
       <img src="images/image3.jpg" alt="Memory Image 3">
       <img src="images/image4.jpg" alt="Memory Image 4">
-      
+      <img src="images/image5.heif" alt="Memory Image 5">
       <img src="images/image6.jpg" alt="Memory Image 6">
       <img src="images/image7.jpg" alt="Memory Image 7">
       <img src="images/image8.jpg" alt="Memory Image 8">
- 
+      <img src="images/image9.heif" alt="Memory Image 9">
       <img src="images/image10.jpg" alt="Memory Image 10">
       <img src="images/image11.jpg" alt="Memory Image 11">
       <img src="images/image12.jpg" alt="Memory Image 12">
