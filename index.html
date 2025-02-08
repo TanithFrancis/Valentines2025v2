@@ -6,6 +6,22 @@
   <title>A Journey of Love</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
+    /* Floating Hearts Background */
+    #floating-hearts {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .floating-heart {
+      position: absolute;
+      font-size: 1.5rem;
+    }
+
     /* Additional styles for the memory game & confetti */
     .card {
       background-color: #f9f9f9;
@@ -31,9 +47,34 @@
       opacity: 0.8;
       pointer-events: none;
     }
+    /* Staggered (masonry) Gallery Styles */
+    #gallery {
+      column-count: 2;
+      column-gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      #gallery {
+        column-count: 3;
+      }
+    }
+    @media (min-width: 1024px) {
+      #gallery {
+        column-count: 4;
+      }
+    }
+    #gallery img {
+      width: 100%;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(10px);
+    }
   </style>
 </head>
 <body class="bg-pink-50">
+  <!-- Floating Background Hearts Container -->
+  <div id="floating-hearts"></div>
 
   <!-- Introduction Section -->
   <section id="section-intro" class="min-h-screen flex flex-col justify-center items-center">
@@ -49,16 +90,14 @@
     </button>
   </section>
 
-  <!-- Riddle Challenge Section -->
+  <!-- Multi-Riddle Challenge Section -->
   <section id="section-riddle" class="min-h-screen flex flex-col justify-center items-center hidden">
-    <h2 class="text-3xl font-serif text-pink-700 mb-4">Riddle of the Heart</h2>
-    <p class="mb-4 text-center max-w-md">
-      I am the beat in your chest and the spark in your eye.<br>
-      Without me, the world would simply pass by.<br>
-      Tell me, what am I?
-    </p>
+    <h2 id="riddle-title" class="text-3xl font-serif text-pink-700 mb-4">Riddle of the Heart</h2>
+    <p id="riddle-question" class="mb-4 text-center max-w-md"></p>
     <input type="text" id="riddle-answer" placeholder="Your answer here" class="border border-pink-300 p-2 rounded mb-4">
-    <button id="riddle-submit" class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600">Submit Answer</button>
+    <button id="riddle-submit" class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600">
+      Submit Answer
+    </button>
     <p id="riddle-error" class="text-red-500 mt-2 hidden">That's not quite right. Try again!</p>
   </section>
 
@@ -67,54 +106,49 @@
     <h2 class="text-3xl font-serif text-red-500 mb-4">Memories of Us</h2>
     <p class="mb-4 text-center max-w-md">Match the symbols that remind us of our cherished moments.</p>
     <div id="memory-grid" class="grid grid-cols-4 gap-4 max-w-md mb-6"></div>
-    <button id="memory-continue" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 hidden">Continue</button>
+    <button id="memory-continue" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 hidden">
+      Continue
+    </button>
   </section>
 
-  <!-- Interactive Story Section -->
-  <section id="section-story" class="min-h-screen flex flex-col justify-center items-center hidden px-4">
-    <h2 class="text-3xl font-serif text-pink-600 mb-4">A Path of Memories</h2>
-    <div id="story-content" class="text-center max-w-md mb-6">
-      <p>Walking down the lane of our memories, every turn holds a cherished moment.</p>
-    </div>
-    <div id="story-choices" class="flex space-x-4">
-      <button class="story-choice bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600" data-choice="first">Recall Our First Meeting</button>
-      <button class="story-choice bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600" data-choice="adventure">Remember Our Adventures</button>
-    </div>
-    <button id="story-continue" class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 mt-4 hidden">Continue</button>
-  </section>
-
-  <!-- Gallery Section: Place this where you prefer in your file (e.g., after the story section) -->
+  <!-- Gallery Section with Staggered Grid -->
   <section id="section-gallery" class="min-h-screen flex flex-col justify-center items-center hidden">
     <h2 class="text-3xl font-serif text-pink-600 mb-4">Our Memory Lane</h2>
-    <div id="gallery" class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
-      <img src="images/image1.jpg" alt="Memory Image 1" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image2.jpg" alt="Memory Image 2" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image3.jpg" alt="Memory Image 3" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image4.jpg" alt="Memory Image 4" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image5.jpg" alt="Memory Image 5 (HEIF)" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image6.jpg" alt="Memory Image 6" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image7.jpg" alt="Memory Image 7" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image8.jpg" alt="Memory Image 8" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image9.jpg" alt="Memory Image 9 (HEIF)" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image10.jpg" alt="Memory Image 10" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image11.jpg" alt="Memory Image 11" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image12.jpg" alt="Memory Image 12" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image13.jpg" alt="Memory Image 13" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image14.jpg" alt="Memory Image 14" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image15.jpg" alt="Memory Image 15" class="rounded shadow-lg opacity-0 transform translate-y-10">
-      <img src="images/image16.jpg" alt="Memory Image 16" class="rounded shadow-lg opacity-0 transform translate-y-10">
+    <div id="gallery" class="w-full p-4">
+      <!-- Update these image paths to match your repository -->
+      <img src="images/image1.jpg" alt="Memory Image 1">
+      <img src="images/image2.jpg" alt="Memory Image 2">
+      <img src="images/image3.jpg" alt="Memory Image 3">
+      <img src="images/image4.jpg" alt="Memory Image 4">
+      <img src="images/image5.heif" alt="Memory Image 5">
+      <img src="images/image6.jpg" alt="Memory Image 6">
+      <img src="images/image7.jpg" alt="Memory Image 7">
+      <img src="images/image8.jpg" alt="Memory Image 8">
+      <img src="images/image9.heif" alt="Memory Image 9">
+      <img src="images/image10.jpg" alt="Memory Image 10">
+      <img src="images/image11.jpg" alt="Memory Image 11">
+      <img src="images/image12.jpg" alt="Memory Image 12">
+      <img src="images/image13.jpg" alt="Memory Image 13">
+      <img src="images/image14.jpg" alt="Memory Image 14">
+      <img src="images/image15.jpg" alt="Memory Image 15">
+      <img src="images/image16.jpg" alt="Memory Image 16">
     </div>
     <button id="gallery-continue" class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 mt-6">
       Continue
     </button>
   </section>
 
-  <!-- Final Revelation Section -->
-  <section id="section-final" class="min-h-screen flex flex-col justify-center items-center hidden">
-    <h2 class="text-3xl font-serif text-red-600 mb-4">The Final Question</h2>
-    <p class="text-center max-w-md mb-6">Cayla Hybre, will you be my valentine?</p>
-    <button id="final-yes" class="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600">Yes</button>
-    <div id="celebration" class="relative w-full h-0"></div>
+  <!-- Final Dramatic Revelation Section -->
+  <section id="section-final" class="min-h-screen flex flex-col justify-center items-center hidden bg-black text-white relative">
+    <div class="text-center p-4">
+      <h2 id="final-question" class="text-5xl font-bold mb-4 opacity-0">
+        Cayla Hybre, will you be my valentine?
+      </h2>
+      <button id="final-yes" class="bg-red-500 text-white px-6 py-3 rounded-full hover:bg-red-600 text-2xl">
+        Yes
+      </button>
+    </div>
+    <div id="celebration" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
   </section>
 
   <!-- GSAP Animation Library -->
