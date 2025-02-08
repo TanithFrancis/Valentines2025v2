@@ -144,33 +144,9 @@
     </button>
   </section>
 
-  <!-- Gallery Section with Carousel and Masonry Grid -->
+  <!-- Gallery Section with Masonry Grid -->
   <section id="section-gallery" class="min-h-screen flex flex-col justify-center items-center hidden">
     <h2 class="text-3xl font-serif text-pink-600 mb-4">Our Memory Lane</h2>
-    
-    <!-- Carousel -->
-    <div id="carousel">
-      <div id="carousel-inner">
-        <img src="images/image1.jpg" alt="Memory Image 1">
-        <img src="images/image2.jpg" alt="Memory Image 2">
-        <img src="images/image3.jpg" alt="Memory Image 3">
-        <img src="images/image4.jpg" alt="Memory Image 4">
-        <img src="images/image5.heif" alt="Memory Image 5">
-        <img src="images/image6.jpg" alt="Memory Image 6">
-        <img src="images/image7.jpg" alt="Memory Image 7">
-        <img src="images/image8.jpg" alt="Memory Image 8">
-        <img src="images/image9.heif" alt="Memory Image 9">
-        <img src="images/image10.jpg" alt="Memory Image 10">
-        <img src="images/image11.jpg" alt="Memory Image 11">
-        <img src="images/image12.jpg" alt="Memory Image 12">
-        <img src="images/image13.jpg" alt="Memory Image 13">
-        <img src="images/image14.jpg" alt="Memory Image 14">
-        <img src="images/image15.jpg" alt="Memory Image 15">
-        <img src="images/image16.jpg" alt="Memory Image 16">
-      </div>
-    </div>
-
-    <!-- Masonry Grid Gallery -->
     <div id="gallery" class="w-full p-4">
       <img src="images/image1.jpg" alt="Memory Image 1">
       <img src="images/image2.jpg" alt="Memory Image 2">
@@ -200,9 +176,14 @@
       <h2 id="final-question" class="text-5xl font-bold mb-4 opacity-0">
         Cayla Hybre, will you be my valentine?
       </h2>
-      <button id="final-yes" class="bg-red-500 text-white px-6 py-3 rounded-full hover:bg-red-600 text-2xl">
-        Yes
-      </button>
+      <div class="flex justify-center gap-4">
+        <button id="final-yes" class="bg-red-500 text-white px-6 py-3 rounded-full hover:bg-red-600 text-2xl">
+          Yes
+        </button>
+        <button id="final-no" class="bg-gray-500 text-white px-6 py-3 rounded-full hover:bg-gray-600 text-2xl">
+          No
+        </button>
+      </div>
     </div>
     <div id="celebration" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
   </section>
