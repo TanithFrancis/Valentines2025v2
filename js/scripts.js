@@ -198,7 +198,6 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("memory-continue").addEventListener("click", function() {
     transitionToSection("section-memory", "section-gallery");
     animateGallery();
-    startCarousel();
   });
 
   // --- Gallery Animation for Masonry Grid ---
@@ -212,31 +211,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // --- Carousel Functionality ---
-  function startCarousel() {
-    const carouselInner = document.getElementById("carousel-inner");
-    const slides = carouselInner.children;
-    const numSlides = slides.length;
-    let currentIndex = 0;
-    function showNextSlide() {
-      currentIndex = (currentIndex + 1) % numSlides;
-      gsap.to(carouselInner, {
-        x: -currentIndex * 100 + "%",
-        duration: 1,
-        ease: "power2.inOut",
-        onComplete: function () {
-          setTimeout(showNextSlide, 3000);
-        },
-      });
-    }
-    setTimeout(showNextSlide, 3000);
-  }
-
-  document.getElementById("gallery-continue").addEventListener("click", function() {
-    transitionToSection("section-gallery", "section-final");
-    animateFinalQuestion();
-  });
-
   // --- Final Dramatic Revelation Animation ---
   function animateFinalQuestion() {
     gsap.fromTo(
@@ -246,8 +220,25 @@ document.addEventListener("DOMContentLoaded", function() {
     );
   }
 
+  // Final Yes Button triggers celebration
   document.getElementById("final-yes").addEventListener("click", function() {
     launchCelebration();
+  });
+
+  // --- Final No Button Logic ---
+  let finalNoTransformed = false;
+  document.getElementById("final-no").addEventListener("click", function() {
+    if (!finalNoTransformed) {
+      finalNoTransformed = true;
+      this.innerText = "Yes";
+      let messageElem = document.createElement("p");
+      messageElem.id = "final-no-message";
+      messageElem.classList.add("text-xl", "mt-4", "text-yellow-300");
+      messageElem.innerText = "You think you are funny? Try again now";
+      document.getElementById("section-final").appendChild(messageElem);
+    } else {
+      launchCelebration();
+    }
   });
 
   // --- Celebration Animation (Confetti) ---
@@ -279,4 +270,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const colors = ["#FF5733", "#FFC300", "#DAF7A6", "#FF33F6", "#C70039", "#900C3F", "#581845"];
     return colors[Math.floor(Math.random() * colors.length)];
   }
+
+  // When the user completes the gallery, move to the final section.
+  document.getElementById("gallery-continue").addEventListener("click", function() {
+    transitionToSection("section-gallery", "section-final");
+    animateFinalQuestion();
+  });
 }); 
