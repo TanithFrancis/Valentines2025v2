@@ -14,18 +14,16 @@ document.addEventListener("DOMContentLoaded", function() {
   // --- Floating Hearts in Background ---
   function createFloatingHearts() {
     const container = document.getElementById("floating-hearts");
-    const numHearts = 20; // Adjust the number for desired density
+    const numHearts = 20;
     for (let i = 0; i < numHearts; i++) {
       const heart = document.createElement("div");
       heart.classList.add("floating-heart");
-      // Randomize heart size between 1.5rem to 2.5rem
-      heart.style.fontSize = 1.5 + Math.random() + "rem";
+      heart.style.fontSize = (1.5 + Math.random()) + "rem";
       heart.style.opacity = 0.5 + Math.random() * 0.5;
       heart.textContent = "❤️";
       heart.style.left = Math.random() * 100 + "%";
       heart.style.top = Math.random() * 100 + "%";
       container.appendChild(heart);
-      // Animate each heart to float upward continuously
       gsap.to(heart, {
         y: -window.innerHeight,
         repeat: -1,
@@ -35,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
   }
-  // Create floating hearts on page load
   createFloatingHearts();
 
   // --- Start Button: Go to Riddles ---
@@ -101,48 +98,52 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // --- Memory Match Game Logic ---
+  // --- Memory Match Game Logic Using Gallery Images ---
   let firstCard = null;
   let secondCard = null;
   let lockBoard = false;
   let matchesFound = 0;
 
   function initializeMemoryGame() {
-    const symbols = ["❤️", "💖", "🌹", "😊"];
-    let cardSymbols = symbols.concat(symbols); // 4 pairs
-    cardSymbols.sort(() => 0.5 - Math.random());
-
+    // Use 8 images from the gallery to create 8 pairs (16 cards total)
+    const memoryImages = [
+      "images/image1.jpg",
+      "images/image2.jpg",
+      "images/image3.jpg",
+      "images/image4.jpg",
+      "images/image5.heif",
+      "images/image6.jpg",
+      "images/image7.jpg",
+      "images/image8.jpg",
+    ];
+    const cardImages = memoryImages.concat(memoryImages); // duplicate for pairs
+    cardImages.sort(() => 0.5 - Math.random());
     const grid = document.getElementById("memory-grid");
     grid.innerHTML = "";
     matchesFound = 0;
-
-    cardSymbols.forEach((symbol) => {
+    cardImages.forEach((imgSrc) => {
       const card = document.createElement("div");
-      card.classList.add(
-        "card",
-        "bg-red-100",
-        "p-4",
-        "flex",
-        "items-center",
-        "justify-center",
-        "text-3xl",
-        "cursor-pointer",
-        "select-none"
-      );
-      card.setAttribute("data-symbol", symbol);
-      card.textContent = "";
+      card.classList.add("card");
+      card.setAttribute("data-img", imgSrc);
+      const imgElement = document.createElement("img");
+      imgElement.src = imgSrc;
+      imgElement.alt = "Memory Card";
+      // Start with the image hidden (back side is shown via CSS)
+      imgElement.classList.add("hidden");
+      card.appendChild(imgElement);
       card.addEventListener("click", handleCardClick);
       grid.appendChild(card);
     });
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
   }
 
   function handleCardClick(e) {
     if (lockBoard) return;
     const card = e.currentTarget;
-    if (card.classList.contains("flipped")) return;
-
+    if (card === firstCard) return;
     flipCard(card);
-
     if (!firstCard) {
       firstCard = card;
       return;
@@ -153,29 +154,34 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function flipCard(card) {
+    const img = card.querySelector("img");
+    img.classList.remove("hidden");
     card.classList.add("flipped");
-    card.textContent = card.getAttribute("data-symbol");
-    card.classList.remove("bg-red-100");
-    card.classList.add("bg-white");
+    gsap.fromTo(card, { rotationY: 0 }, { rotationY: 180, duration: 0.5, ease: "power2.out" });
   }
 
   function unflipCard(card) {
+    const img = card.querySelector("img");
     card.classList.remove("flipped");
-    card.textContent = "";
-    card.classList.remove("bg-white");
-    card.classList.add("bg-red-100");
+    gsap.to(card, {
+      rotationY: 0,
+      duration: 0.5,
+      ease: "power2.in",
+      onComplete: () => {
+        img.classList.add("hidden");
+      },
+    });
   }
 
   function checkForMatch() {
-    const symbol1 = firstCard.getAttribute("data-symbol");
-    const symbol2 = secondCard.getAttribute("data-symbol");
-
-    if (symbol1 === symbol2) {
+    const img1 = firstCard.getAttribute("data-img");
+    const img2 = secondCard.getAttribute("data-img");
+    if (img1 === img2) {
       firstCard.removeEventListener("click", handleCardClick);
       secondCard.removeEventListener("click", handleCardClick);
       resetMemoryBoard();
       matchesFound++;
-      if (matchesFound === 4) {
+      if (matchesFound === 8) {
         setTimeout(() => {
           document.getElementById("memory-continue").classList.remove("hidden");
         }, 500);
