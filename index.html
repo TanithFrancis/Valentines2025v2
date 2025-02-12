@@ -101,6 +101,49 @@
       transform: translateX(0);
       transition: all 0.5s;
     }
+
+    /* Memory Game (Card) Styles */
+    #memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .card {
+      background-color: #ccc; /* card back */
+      height: 100px;
+      position: relative;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      perspective: 600px;
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      backface-visibility: hidden;
+      transform: rotateY(180deg);
+    }
+    .card.flipped img {
+      transform: rotateY(0deg);
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #e53e3e;
+      border-radius: 0.5rem;
+      backface-visibility: hidden;
+      transform: rotateY(0deg);
+    }
+    .card.flipped::before {
+      transform: rotateY(180deg);
+    }
   </style>
 </head>
 <body class="bg-pink-50">
@@ -109,7 +152,7 @@
 
   <!-- Introduction Section -->
   <section id="section-intro" class="min-h-screen flex flex-col justify-center items-center">
-    <h1 class="text-4xl font-serif text-red-600 mb-4">Welcome, Cayla</h1>
+    <h1 class="text-4xl font-serif text-red-600 mb-4">Welcome, My Love</h1>
     <p class="text-center max-w-md mb-6">
       In gentle whispers, love calls to your heart,<br>
       Embarking on a journey where dreams never part.<br>
@@ -137,8 +180,8 @@
   <!-- Memory Match Game Section -->
   <section id="section-memory" class="min-h-screen flex flex-col justify-center items-center hidden">
     <h2 class="text-3xl font-serif text-red-500 mb-4">Memories of Us</h2>
-    <p class="mb-4 text-center max-w-md">Match the symbols that remind us of our cherished moments.</p>
-    <div id="memory-grid" class="grid grid-cols-4 gap-4 max-w-md mb-6"></div>
+    <p class="mb-4 text-center max-w-md">Match the images that remind us of our cherished memories.</p>
+    <div id="memory-grid" class="max-w-md mb-6"></div>
     <button id="memory-continue" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 hidden">
       Continue
     </button>
@@ -152,11 +195,11 @@
       <img src="images/image2.jpg" alt="Memory Image 2">
       <img src="images/image3.jpg" alt="Memory Image 3">
       <img src="images/image4.jpg" alt="Memory Image 4">
-     
+      <img src="images/image5.heif" alt="Memory Image 5">
       <img src="images/image6.jpg" alt="Memory Image 6">
       <img src="images/image7.jpg" alt="Memory Image 7">
       <img src="images/image8.jpg" alt="Memory Image 8">
-
+      <img src="images/image9.heif" alt="Memory Image 9">
       <img src="images/image10.jpg" alt="Memory Image 10">
       <img src="images/image11.jpg" alt="Memory Image 11">
       <img src="images/image12.jpg" alt="Memory Image 12">
